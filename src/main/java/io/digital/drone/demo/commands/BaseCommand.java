@@ -2,9 +2,11 @@ package io.digital.drone.demo.commands;
 
 import io.digital.drone.demo.UdpClient;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 import java.io.IOException;
 
+@ToString
 @RequiredArgsConstructor
 public class BaseCommand implements Command {
 
@@ -13,10 +15,10 @@ public class BaseCommand implements Command {
 
     @Override
     public String execute(UdpClient udpClient) throws IOException {
-        String res = udpClient.sendCommand(commandString);
+        UdpClient.Message msg = udpClient.sendCommand(commandString);
         if (pause > 0) {
             udpClient.safeSleep(pause);
         }
-        return res;
+        return msg.getMessage();
     }
 }

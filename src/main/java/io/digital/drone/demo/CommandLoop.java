@@ -4,13 +4,11 @@ package io.digital.drone.demo;
 import io.digital.drone.demo.commands.Command;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-@Service
 @Slf4j
 public class CommandLoop implements Runnable {
 
@@ -45,9 +43,10 @@ public class CommandLoop implements Runnable {
         while (running) {
             try {
                 Command command = commandQueue.take();
+                log.info("{}: Executing {} ", commandClient.getIpString(), command);
                 String response = command.execute(commandClient);
                 if (!StringUtils.equalsIgnoreCase(response, "ok")) {
-                    log.warn("Got NON-OK on {}: {}", command, response);
+                    log.warn("{} Got NON-OK on {}: {}", commandClient.getIpString(), command, response);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();

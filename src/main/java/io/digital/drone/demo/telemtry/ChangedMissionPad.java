@@ -1,24 +1,19 @@
 package io.digital.drone.demo.telemtry;
 
+import io.digital.drone.demo.models.TelemetryState;
 import lombok.Value;
 import org.springframework.context.ApplicationEvent;
 
 @Value
 public class ChangedMissionPad extends ApplicationEvent {
 
-    String mid;
+    String ip;
 
-    int x;
+    TelemetryState state;
 
-    int y;
-
-    int z;
-
-    public ChangedMissionPad(String mid, String x, String y, String z) {
-        super(mid);
-        this.mid = mid;
-        this.x = Integer.parseInt(x);
-        this.y = Integer.parseInt(y);
-        this.z = Integer.parseInt(z);
+    public ChangedMissionPad(String ip, TelemetryState state) {
+        super(ip);
+        this.ip = ip;
+        this.state = state;
     }
 }
