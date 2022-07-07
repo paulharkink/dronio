@@ -1,5 +1,7 @@
 package io.digital.drone.demo;
 
+import io.digital.drone.demo.commands.Down;
+import io.digital.drone.demo.commands.Land;
 import io.digital.drone.demo.commands.Start;
 import io.digital.drone.demo.commands.Takeoff;
 import io.digital.drone.demo.telemtry.TelemetryListener;
@@ -22,7 +24,8 @@ public class CmdRunner implements CommandLineRunner {
         this.commandLoop = commandLoop;
         commandLoop.start();
         commandLoop.offer(new Start(10_000));
-//        commandLoop.offer(new Takeoff(5_000));
+        commandLoop.offer(new Takeoff(5_000));
+        commandLoop.offer(new Land(5_000));
         telemetryListener.start();
     }
 
