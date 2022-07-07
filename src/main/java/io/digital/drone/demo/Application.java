@@ -45,6 +45,11 @@ public class Application {
     }
 
     @Bean
+    DroneController controllerThree(DroneIOProperties droneIOProperties) throws SocketException, UnknownHostException {
+        return create(droneIOProperties.getThree().getIp());
+    }
+
+    @Bean
     TelemetryListener telemetryListener(ApplicationEventPublisher applicationEventPublisher) throws SocketException, UnknownHostException {
         UdpClient listener = new UdpClient(SERVER_IP, listenSocket());
         return new TelemetryListener(listener, applicationEventPublisher, objectMapper());
