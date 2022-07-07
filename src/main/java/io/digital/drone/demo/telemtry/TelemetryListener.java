@@ -2,7 +2,9 @@ package io.digital.drone.demo.telemtry;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Splitter;
 import io.digital.drone.demo.UdpClient;
+import io.digital.drone.demo.models.UDPMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -46,6 +48,17 @@ public class TelemetryListener implements Runnable {
     }
 
     public void parse(String row) throws JsonProcessingException {
+
+        Map<String, String> messageMap = Splitter.on(";")
+                .omitEmptyStrings()
+                .withKeyValueSeparator(":")
+                .split(row
+                        .replace("\r", "")
+                        .replace("\n", "")
+                );
+
+        var message = objectMapper.convertValue(messageMap, UDPMessage.class);
+
         String previousMissionId = current.get("mid");
 
         Arrays.stream(StringUtils.split(row, ";"))
@@ -54,12 +67,7 @@ public class TelemetryListener implements Runnable {
                 .forEach(pair -> take(pair[0], pair[1]));
 
         if (!StringUtils.equalsIgnoreCase(previousMissionId, current.get("mid"))) {
-            applicationEventPublisher.publishEvent(new ChangedMissionPad(
-                    current.get("mid"),
-                    current.get("x"),
-                    current.get("y"),
-                    current.get("z")
-            ));
+            applicationEventPublisher.publishEvent(message);
         }
     }
 
