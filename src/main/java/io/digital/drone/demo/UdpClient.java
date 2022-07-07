@@ -62,7 +62,6 @@ public class UdpClient implements Closeable {
         if (socketAddress instanceof InetSocketAddress) {
             InetAddress inetAddress = ((InetSocketAddress) socketAddress).getAddress();
             if (inetAddress instanceof Inet4Address) {
-                System.out.println("IPv4: " + inetAddress);
                 return inetAddress.getHostAddress();
             }
         }

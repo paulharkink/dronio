@@ -17,9 +17,9 @@ public class FlightCoordinator {
     public void startFlight() {
         controllerOne.executeFlightPlan();
 
-        controllerTwo.executeFlightPlan();
+//        controllerTwo.executeFlightPlan();
 
-        controllerThree.executeFlightPlan();
+//        controllerThree.executeFlightPlan();
     }
 
 }

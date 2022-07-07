@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 
 import javax.annotation.Nullable;
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
@@ -28,6 +29,7 @@ public class TelemetryListener implements Runnable {
 
     private Map<String, TelemetryState> current = new ConcurrentHashMap<>();
 
+    @PostConstruct
     public void start() {
         if (!running) {
             this.running = true;
@@ -59,7 +61,7 @@ public class TelemetryListener implements Runnable {
                 .map(TelemetryState::getMid)
                 .orElse(0);
 
-        if (Objects.equals(oldMid, nwState.getMid())) {
+        if (!Objects.equals(oldMid, nwState.getMid())) {
             applicationEventPublisher.publishEvent(new ChangedMissionPad(row.getIpAddress(), nwState));
         }
     }
@@ -73,7 +75,6 @@ public class TelemetryListener implements Runnable {
             } catch (IOException e) {
                 log.warn("Fout", e);
             }
-            log.info("Telemetry: {}", row);
         }
     }
 
