@@ -16,12 +16,12 @@ public class CmdRunner implements CommandLineRunner {
         log.info("Starting");
     }
 
-    private List<Command> flightplan = Arrays.asList(
-            new Start(10_000),
-            new Takeoff(5_000),
-//            new Go(0, 0, 0, 5, 3, 5_000),
-//            new Up(25, 5_000),
-            new Jump(100, 0, 25, 10, 0, 7, 2, 5_000),
-            new Land(5_000)
-    );
+//    private List<Command> flightplan = Arrays.asList(
+//            new Start(10_000),
+//            new Takeoff(5_000),
+////            new Go(0, 0, 0, 5, 3, 5_000),
+////            new Up(25, 5_000),
+//            new Jump(100, 0, 25, 10, 0, 7, 2, 5_000),
+//            new Land(5_000)
+//    );
 }
