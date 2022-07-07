@@ -8,8 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UDPMessage {
-
+public class TelemetryState {
 
     private Integer mid;
     private Integer x;
